@@ -16,10 +16,8 @@ class ApiService:
         data = self.analyzer(self.transform(self.extract()))
         self.persist(data)
         self.createReportCsv(data)
-        print(data)
         return json.dumps({
-            'workfile' : self.workfile,
-            'reportCsv': self.reportsFile,
+            'pathReportCsv': self.reportsFile,
             'data': data
         })
 
