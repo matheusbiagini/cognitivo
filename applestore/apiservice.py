@@ -1,6 +1,7 @@
 from django.core import serializers
 import json
 import csv
+import os
 from applestore.models import Application
 
 class ApiService:
@@ -62,7 +63,12 @@ class ApiService:
         return newData
 
     def createReportCsv(self, data):
-        return data
+        fileOutput = self.reportsFile
+        with open(fileOutput, 'w') as csvFile:
+            c = csv.writer(csvFile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+            c.writerow(["application_id","track_name","n_citacoes","size_bytes","price","prime_genre"])
+            for row in data:
+                c.writerow([row["application_id"], row["track_name"], row["n_citacoes"], row["size_bytes"], row["price"], row["prime_genre"]])
 
     def persist(self, data):
         for row in data:
