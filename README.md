@@ -1,6 +1,8 @@
-#Bem vindo ao meu teste da Cognitivo "Freelance"
+##Teste da Cognitivo "Freelance"
 
-## Configurando o ambiente para o teste:
+O teste foi feito utilizando o Docker, Python e Django com Mysql.
+
+### Configurando o ambiente:
 
 1. Instalar o Docker-CE (17.12+)
 2. Instalar o Docker-compose
@@ -11,5 +13,7 @@
 7. Adicionar permissão: `sudo chown -R $USER:$USER .`
 8. Rodar: `docker-compose up -d`
 9. Rodar as migrations: `docker-compose exec web python manage.py migrate applestore`
-11. Digite no browser `http://localhost:8000/cognitivo/applestore/api`
-12. Obrigado :)
+
+### Rodando meu Teste
+1. Digite no browser `http://localhost:8000/cognitivo/applestore/api`
+2. Obrigado :)
