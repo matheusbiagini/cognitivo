@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('application_id', models.IntegerField()),
-                ('track_name', models.CharField(max_length=100)),
+                ('track_name', models.TextField()),
                 ('n_citacoes', models.IntegerField()),
-                ('size_bytes', models.IntegerField()),
+                ('size_bytes', models.BigIntegerField()),
                 ('price', models.FloatField()),
-                ('prime_genre', models.CharField(max_length=50)),
+                ('prime_genre', models.CharField(max_length=150)),
             ],
         ),
     ]

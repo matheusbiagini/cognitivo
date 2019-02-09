@@ -9,4 +9,6 @@ RUN apt-get update && apt-get install -y \
         python-mysqldb \
         mysql-client
 RUN pip install mysqlclient
+RUN pip install requests
+RUN pip install pandas
 COPY . /code/

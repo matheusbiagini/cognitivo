@@ -11,5 +11,5 @@
 7. Adicionar permissão: `sudo chown -R $USER:$USER .`
 8. Rodar: `docker-compose up -d`
 9. Rodar as migrations: `docker-compose exec web python manage.py migrate applestore`
-11. Digite no browser `http://localhost:8080/cognitivo/applestore`
+11. Digite no browser `http://localhost:8080`
 12. Obrigado :)
