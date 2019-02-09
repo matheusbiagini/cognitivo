@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    env_file:
+      - env/database.env
+    volumes:
+      - "database:/var/lib/mysql"
+      - "./migration/schema.sql:/docker-entrypoint-initdb.d/schema.sql"
+    ports:
+      - 3306:3306
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    env_file:
+      - env/app.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+
+volumes:
+  database:
