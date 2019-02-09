@@ -7,7 +7,7 @@ services:
       - env/database.env
     volumes:
       - "database:/var/lib/mysql"
-      - "./migration/schema.sql:/docker-entrypoint-initdb.d/schema.sql"
+      - "./schema.sql:/docker-entrypoint-initdb.d/schema.sql"
     ports:
       - 3306:3306
   web:
