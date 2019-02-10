@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Application(models.Model):
     application_id = models.IntegerField()
     track_name = models.TextField()
