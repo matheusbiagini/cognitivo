@@ -15,10 +15,10 @@ O teste foi feito utilizando o Docker, Mysql, Python e Django.
 8. Inicie o docker: `docker-compose up -d`
 9. Rode as migrations: `docker-compose exec web python manage.py migrate applestore`
 
-### Rodando meu Teste:
+### Executando o Teste:
 Digite no browser: `http://localhost:8000/cognitivo/applestore/api`
 
-### Resultado: ###
+### Resultado do teste: ###
 O teste vai gerar os dados de acordo com o proposto no teste(Json+Tabela+Csv) e o arquivo csv "Reports.csv".
 
 Obrigado. :)
