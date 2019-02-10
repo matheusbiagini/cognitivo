@@ -1,17 +1,18 @@
 import json
 import csv
+from typing import List
 from applestore.models import Application
 
 class ApiService:
     workfile = ''
     reportsFile = ''
 
-    def __init__(self, workfile, reportsFile):
+    def __init__(self, workfile: str, reportsFile: str):
         self.workfile = workfile
         self.reportsFile = reportsFile
 
-    def consumer(self):
-        data = self.analyzer(self.transform(self.extract()))
+    def consumer(self) -> str:
+        data: List[int]  = self.analyzer(self.transform(self.extract()))
         self.persist(data)
         self.createReportCsv(data)
         return json.dumps({
@@ -19,9 +20,9 @@ class ApiService:
             'data': data
         })
 
-    def extract(self):
+    def extract(self) -> List[int]:
         with open(self.workfile, newline='') as csvfile:
-            data = []
+            data: List[int] = []
             csvList = csv.reader(csvfile, delimiter=',')
             for row in csvList:
                 data.append({
@@ -35,18 +36,18 @@ class ApiService:
         data.pop(0)
         return data
 
-    def analyzer(self, data):
-        newData = []
+    def analyzer(self, data: List[int]) -> List[int]:
+        newData: List[int] = []
         for row in data:
             if (row['prime_genre'] == 'Music') or (row['prime_genre'] == 'Book'):
                 newData.append(row)
         return sorted(newData, key=self.ordenation, reverse=True)[0:10]
 
-    def ordenation(self, item):
+    def ordenation(self, item: List[str]):
         return item['n_citacoes']
 
-    def transform(self, data):
-        newData = []
+    def transform(self, data: List[int]) -> List[int]:
+        newData: List[int] = []
         for row in data:
             newData.append({
                     "application_id" : int(row['id'].replace('"', "")),
@@ -58,17 +59,17 @@ class ApiService:
                 })
         return newData
 
-    def createReportCsv(self, data):
-        fileOutput = self.reportsFile
+    def createReportCsv(self, data: List[int]):
+        fileOutput: str = self.reportsFile
         with open(fileOutput, 'w') as csvFile:
             c = csv.writer(csvFile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             c.writerow(["application_id","track_name","n_citacoes","size_bytes","price","prime_genre"])
             for row in data:
                 c.writerow([row["application_id"], row["track_name"], row["n_citacoes"], row["size_bytes"], row["price"], row["prime_genre"]])
 
-    def persist(self, data):
+    def persist(self, data: List[int]):
         for row in data:
-            application = Application(
+            application: Application = Application(
                 application_id = row['application_id'],
                 track_name = row['track_name'],
                 n_citacoes = row['n_citacoes'],
