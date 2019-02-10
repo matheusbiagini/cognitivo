@@ -1,7 +1,5 @@
-from django.core import serializers
 import json
 import csv
-import os
 from applestore.models import Application
 
 class ApiService:
