@@ -1,7 +1,10 @@
+"""Import models."""
 from django.db import models
 
 
 class Application(models.Model):
+    """Model Application."""
+
     application_id = models.IntegerField()
     track_name = models.TextField()
     n_citacoes = models.IntegerField()

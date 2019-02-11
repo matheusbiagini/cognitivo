@@ -1,28 +1,34 @@
+"""Import json."""
 import json
+
 import csv
 from typing import List
 from applestore.models import Application
 
 
 class ApiService:
-    workfile: str = ''
-    reportsFile: str = ''
+    """Service Api AppleStore."""
+
+    __workfile: str = ''
+    __reportsFile: str = ''
 
     def __init__(self, workfile: str, reportsFile: str):
-        self.workfile = workfile
-        self.reportsFile = reportsFile
+        """Construct."""
+        self.__workfile = workfile
+        self.__reportsFile = reportsFile
 
     def consumer(self) -> str:
-        data: List[int] = self.analyzer(self.transform(self.extract()))
-        self.persist(data)
-        self.createReportCsv(data)
+        """Consume and generate data for api json."""
+        data: List[int] = self.__analyzer(self.__transform(self.__extract()))
+        self.__persist(data)
+        self.__createReportCsv(data)
         return json.dumps({
-            'pathReportCsv': self.reportsFile,
+            'pathReportCsv': self.__reportsFile,
             'data': data
         })
 
-    def extract(self) -> List[int]:
-        with open(self.workfile, newline='') as csvfile:
+    def __extract(self) -> List[int]:
+        with open(self.__workfile, newline='') as csvfile:
             data: List[int] = []
             csvList = csv.reader(csvfile, delimiter=',')
             for row in csvList:
@@ -37,18 +43,18 @@ class ApiService:
         data.pop(0)
         return data
 
-    def analyzer(self, data: List[int]) -> List[int]:
+    def __analyzer(self, data: List[int]) -> List[int]:
         newData: List[int] = []
         for row in data:
             if (row['prime_genre'] == 'Music') \
              or (row['prime_genre'] == 'Book'):
                 newData.append(row)
-        return sorted(newData, key=self.ordenation, reverse=True)[0:10]
+        return sorted(newData, key=self.__ordenation, reverse=True)[0:10]
 
-    def ordenation(self, item: List[str]):
+    def __ordenation(self, item: List[str]):
         return item['n_citacoes']
 
-    def transform(self, data: List[int]) -> List[int]:
+    def __transform(self, data: List[int]) -> List[int]:
         newData: List[int] = []
         for row in data:
             newData.append({
@@ -61,8 +67,8 @@ class ApiService:
                 })
         return newData
 
-    def createReportCsv(self, data: List[int]):
-        fileOutput: str = self.reportsFile
+    def __createReportCsv(self, data: List[int]):
+        fileOutput: str = self.__reportsFile
         with open(fileOutput, 'w') as csvFile:
             c = csv.writer(csvFile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             c.writerow([
@@ -83,7 +89,7 @@ class ApiService:
                     row["prime_genre"]
                 ])
 
-    def persist(self, data: List[int]):
+    def __persist(self, data: List[int]):
         for row in data:
             application: Application = Application(
                 application_id=row['application_id'],
