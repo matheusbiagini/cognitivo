@@ -29,10 +29,14 @@ class ApiService:
     def consumer(self) -> str:
         """Consume and generate data or api json."""
         data: List[int] = self.__analyzer(
-            self.__transform(self.__csvService.extract(self.__csvAppleStore))
+            data=self.__transform(
+                data=self.__csvService.extract(
+                    csvPathFile=self.__csvAppleStore
+                )
+            )
         )
-        self.__applicationService.persist(data)
-        self.__createReportCsv(data)
+        self.__applicationService.persist(data=data)
+        self.__createReportCsv(data=data)
         return json.dumps({
             'pathReportCsv': self.__reportsFile,
             'data': data
@@ -84,5 +88,7 @@ class ApiService:
             ])
 
         self.__csvService.createCsv(
-            self.__reportsFile, columns, dataCsv
+            csvPathFile=self.__reportsFile,
+            columns=columns,
+            data=dataCsv
         )
