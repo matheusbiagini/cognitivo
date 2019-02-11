@@ -6,9 +6,9 @@ from typing import List
 class CsvService:
     """Csv service."""
 
-    def extract(self, csvPathFile: str) -> List[int]:
+    def extract(self, csv_path_file: str) -> List[int]:
         """Extract csv."""
-        with open(csvPathFile, newline='') as csvfile:
+        with open(csv_path_file, newline='') as csvfile:
             data: List[int] = []
             csvList = csv.reader(csvfile, delimiter=',')
             for row in csvList:
@@ -23,9 +23,9 @@ class CsvService:
         data.pop(0)
         return data
 
-    def createCsv(self, csvPathFile: str, columns: List[int], data: List[int]):
+    def create(self, csv_path_file: str, columns: List[int], data: List[int]):
         """Create csv file."""
-        with open(csvPathFile, 'w') as csvFile:
+        with open(csv_path_file, 'w') as csvFile:
             c = csv.writer(csvFile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             c.writerow(columns)
             for row in data:

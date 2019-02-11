@@ -8,37 +8,37 @@ from applestore.csvservice import CsvService
 class ApiService:
     """Service Api AppleStore."""
 
-    __csvAppleStore: str = ''
-    __reportsFile: str = ''
-    __applicationService: ApplicationService
-    __csvService: CsvService
+    __csv_apple_store: str = ''
+    __reports_file: str = ''
+    __application_service: ApplicationService
+    __csv_service: CsvService
 
     def __init__(
         self,
-        csvAppleStore: str,
-        applicationService: ApplicationService,
-        csvService: CsvService,
-        reportsFile: str,
+        csv_apple_store: str,
+        application_service: ApplicationService,
+        csv_service: CsvService,
+        reports_file: str,
     ):
         """Construct."""
-        self.__csvAppleStore = csvAppleStore
-        self.__applicationService = applicationService
-        self.__csvService = csvService
-        self.__reportsFile = reportsFile
+        self.__csv_apple_store = csv_apple_store
+        self.__application_service = application_service
+        self.__csv_service = csv_service
+        self.__reports_file = reports_file
 
     def consumer(self) -> str:
         """Consume and generate data or api json."""
         data: List[int] = self.__analyzer(
             data=self.__transform(
-                data=self.__csvService.extract(
-                    csvPathFile=self.__csvAppleStore
+                data=self.__csv_service.extract(
+                    csv_path_file=self.__csv_apple_store
                 )
             )
         )
-        self.__applicationService.persist(data=data)
-        self.__createReportCsv(data=data)
+        self.__application_service.persist(data=data)
+        self.__create_report_csv(data=data)
         return json.dumps({
-            'pathReportCsv': self.__reportsFile,
+            'pathReportCsv': self.__reports_file,
             'data': data
         })
 
@@ -66,7 +66,7 @@ class ApiService:
                 })
         return newData
 
-    def __createReportCsv(self, data: List[int]):
+    def __create_report_csv(self, data: List[int]):
         dataCsv: List[int] = []
         columns: List[int] = [
             "application_id",
@@ -87,8 +87,8 @@ class ApiService:
                 row["prime_genre"]
             ])
 
-        self.__csvService.createCsv(
-            csvPathFile=self.__reportsFile,
+        self.__csv_service.create(
+            csv_path_file=self.__reports_file,
             columns=columns,
             data=dataCsv
         )
