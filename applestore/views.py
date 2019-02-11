@@ -1,6 +1,8 @@
 """Return the HttpResponse and ApiService."""
 from django.shortcuts import HttpResponse
 from applestore.apiservice import ApiService
+from applestore.applicationservice import ApplicationService
+from applestore.csvservice import CsvService
 
 
 def home(request):
@@ -10,6 +12,11 @@ def home(request):
 
 def api(request):
     """Consume api of applestore."""
-    apiService = ApiService('AppleStore.csv', 'Reports.csv')
+    apiService = ApiService(
+        'AppleStore.csv',
+        ApplicationService(),
+        CsvService(),
+        'Reports.csv'
+    )
     response = apiService.consumer()
     return HttpResponse(response, content_type='application/json')
