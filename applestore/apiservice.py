@@ -43,20 +43,20 @@ class ApiService:
         })
 
     def __analyzer(self, data: List[int]) -> List[int]:
-        newData: List[int] = []
+        new_data: List[int] = []
         for row in data:
             if (row['prime_genre'] == 'Music') \
              or (row['prime_genre'] == 'Book'):
-                newData.append(row)
-        return sorted(newData, key=self.__ordenation, reverse=True)[0:10]
+                new_data.append(row)
+        return sorted(new_data, key=self.__ordenation, reverse=True)[0:10]
 
-    def __ordenation(self, item: List[str]):
+    def __ordenation(self, item: List[str]) -> str:
         return item['n_citacoes']
 
     def __transform(self, data: List[int]) -> List[int]:
-        newData: List[int] = []
+        new_data: List[int] = []
         for row in data:
-            newData.append({
+            new_data.append({
                     "application_id": int(row['id'].replace('"', "")),
                     "track_name": row['trackName'].replace('"', ""),
                     "n_citacoes": int(row['nCitacoes'].replace('"', "")),
@@ -64,10 +64,10 @@ class ApiService:
                     "price": float(row['Prince'].replace('"', "")),
                     "prime_genre": row['PrimeGenre'].replace('"', "")
                 })
-        return newData
+        return new_data
 
     def __create_report_csv(self, data: List[int]):
-        dataCsv: List[int] = []
+        data_csv: List[int] = []
         columns: List[int] = [
             "application_id",
             "track_name",
@@ -78,7 +78,7 @@ class ApiService:
         ]
 
         for row in data:
-            dataCsv.append([
+            data_csv.append([
                 row["application_id"],
                 row["track_name"],
                 row["n_citacoes"],
@@ -90,5 +90,5 @@ class ApiService:
         self.__csv_service.create(
             csv_path_file=self.__reports_file,
             columns=columns,
-            data=dataCsv
+            data=data_csv
         )

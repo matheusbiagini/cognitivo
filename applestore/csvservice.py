@@ -10,8 +10,8 @@ class CsvService:
         """Extract csv."""
         with open(csv_path_file, newline='') as csvfile:
             data: List[int] = []
-            csvList = csv.reader(csvfile, delimiter=',')
-            for row in csvList:
+            csv_list = csv.reader(csvfile, delimiter=',')
+            for row in csv_list:
                 data.append({
                     "id": row[1],
                     "trackName": row[2],
@@ -23,7 +23,7 @@ class CsvService:
         data.pop(0)
         return data
 
-    def create(self, csv_path_file: str, columns: List[int], data: List[int]):
+    def create(self, csv_path_file: str, columns: List[int], data: List[int]) -> None:
         """Create csv file."""
         with open(csv_path_file, 'w') as csvFile:
             c = csv.writer(csvFile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
