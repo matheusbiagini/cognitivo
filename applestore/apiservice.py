@@ -1,8 +1,11 @@
 """Class Api Service."""
 import json
 from typing import List
+from typing import TypeVar
 from applestore.applicationservice import ApplicationService
 from applestore.csvservice import CsvService
+
+T = TypeVar('T')
 
 
 class ApiService:
@@ -28,7 +31,7 @@ class ApiService:
 
     def consumer(self) -> str:
         """Consume and generate data or api json."""
-        data: List[int] = self.__analyzer(
+        data: List[T] = self.__analyzer(
             data=self.__transform(
                 data=self.__csv_service.extract(
                     csv_path_file=self.__csv_apple_store
@@ -42,19 +45,19 @@ class ApiService:
             'data': data
         })
 
-    def __analyzer(self, data: List[int]) -> List[int]:
-        new_data: List[int] = []
+    def __analyzer(self, data: List[T]) -> List[T]:
+        new_data: List[T] = []
         for row in data:
             if (row['prime_genre'] == 'Music') \
              or (row['prime_genre'] == 'Book'):
                 new_data.append(row)
         return sorted(new_data, key=self.__ordenation, reverse=True)[0:10]
 
-    def __ordenation(self, item: List[str]) -> str:
+    def __ordenation(self, item: List[T]) -> int:
         return item['n_citacoes']
 
-    def __transform(self, data: List[int]) -> List[int]:
-        new_data: List[Any] = []
+    def __transform(self, data: List[T]) -> List[T]:
+        new_data: List[T] = []
         for row in data:
             new_data.append({
                     "application_id": int(row['id'].replace('"', "")),
@@ -66,9 +69,9 @@ class ApiService:
                 })
         return new_data
 
-    def __create_report_csv(self, data: List[int]):
-        data_csv: List[Any] = []
-        columns: List[int] = [
+    def __create_report_csv(self, data: List[T]):
+        data_csv: List[T] = []
+        columns: List[str] = [
             "application_id",
             "track_name",
             "n_citacoes",

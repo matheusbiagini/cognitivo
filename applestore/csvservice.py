@@ -1,15 +1,18 @@
 """Class Csv Service."""
 import csv
+from typing import TypeVar
 from typing import List
+
+T = TypeVar('T')
 
 
 class CsvService:
     """Csv service."""
 
-    def extract(self, csv_path_file: str) -> List[int]:
+    def extract(self, csv_path_file: str) -> List[T]:
         """Extract csv."""
         with open(csv_path_file, newline='') as csvfile:
-            data: List[Any] = []
+            data: List[T] = []
             csv_list = csv.reader(csvfile, delimiter=',')
             for row in csv_list:
                 data.append({
@@ -23,7 +26,7 @@ class CsvService:
         data.pop(0)
         return data
 
-    def create(self, csv_path_file: str, columns: List[int], data: List[int]) -> None:
+    def create(self, csv_path_file: str, columns: List[str], data: List[T]) -> None:
         """Create csv file."""
         with open(csv_path_file, 'w') as csvFile:
             c = csv.writer(csvFile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
