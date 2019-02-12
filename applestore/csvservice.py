@@ -9,6 +9,7 @@ T = TypeVar('T')
 class CsvService:
     """Csv service."""
 
+    # noinspection PyMethodMayBeStatic
     def extract(self, csv_path_file: str) -> List[T]:
         """Extract csv."""
         with open(csv_path_file, newline='') as csvfile:
@@ -26,7 +27,13 @@ class CsvService:
         data.pop(0)
         return data
 
-    def create(self, csv_path_file: str, columns: List[str], data: List[T]) -> None:
+    # noinspection PyMethodMayBeStatic
+    def create(
+        self,
+        csv_path_file: str,
+        columns: List[str],
+        data: List[T]
+    ) -> None:
         """Create csv file."""
         with open(csv_path_file, 'w') as csvFile:
             c = csv.writer(csvFile, delimiter=',', quoting=csv.QUOTE_MINIMAL)

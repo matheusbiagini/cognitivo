@@ -6,6 +6,7 @@ from typing import List
 class ApplicationService:
     """Application model management service."""
 
+    # noinspection PyMethodMayBeStatic
     def persist(self, data: List[int]) -> None:
         """Persist in database."""
         for row in data:

@@ -53,9 +53,11 @@ class ApiService:
                 new_data.append(row)
         return sorted(new_data, key=self.__ordenation, reverse=True)[0:10]
 
+    # noinspection PyMethodMayBeStatic
     def __ordenation(self, item: List[T]) -> int:
         return item['n_citacoes']
 
+    # noinspection PyMethodMayBeStatic
     def __transform(self, data: List[T]) -> List[T]:
         new_data: List[T] = []
         for row in data:
