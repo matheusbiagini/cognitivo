@@ -12,11 +12,11 @@ def home(request):
 
 def api(request):
     """Consume api of applestore."""
-    apiService = ApiService(
+    api_service = ApiService(
         csv_apple_store='AppleStore.csv',
         application_service=ApplicationService(),
         csv_service=CsvService(),
         reports_file='Reports.csv'
     )
-    response = apiService.consumer()
+    response = api_service.consumer()
     return HttpResponse(response, content_type='application/json')

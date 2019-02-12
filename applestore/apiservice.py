@@ -54,7 +54,7 @@ class ApiService:
         return item['n_citacoes']
 
     def __transform(self, data: List[int]) -> List[int]:
-        new_data: List[int] = []
+        new_data: List[Any] = []
         for row in data:
             new_data.append({
                     "application_id": int(row['id'].replace('"', "")),
@@ -67,7 +67,7 @@ class ApiService:
         return new_data
 
     def __create_report_csv(self, data: List[int]):
-        data_csv: List[int] = []
+        data_csv: List[Any] = []
         columns: List[int] = [
             "application_id",
             "track_name",

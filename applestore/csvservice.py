@@ -9,7 +9,7 @@ class CsvService:
     def extract(self, csv_path_file: str) -> List[int]:
         """Extract csv."""
         with open(csv_path_file, newline='') as csvfile:
-            data: List[int] = []
+            data: List[Any] = []
             csv_list = csv.reader(csvfile, delimiter=',')
             for row in csv_list:
                 data.append({
